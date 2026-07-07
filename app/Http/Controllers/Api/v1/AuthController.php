@@ -4,15 +4,29 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
-    public function register()
+    private AuthService $authService;
+
+    public function __construct(AuthService $_authService)
     {
-        // Registration logic here
+        $this->authService = $_authService;
     }
 
-    public function login()
+    public function register(RegisterRequest $request)
+    {
+        $data = $request -> validated();
+        
+        $result = $this->_authService->register($data);
+
+        return response()->json($result);
+    }
+
+    public function login(LoginRequest $request)
     {
 
     }
@@ -32,5 +46,5 @@ class AuthController extends Controller
 
     }
 
-    
+
 }
