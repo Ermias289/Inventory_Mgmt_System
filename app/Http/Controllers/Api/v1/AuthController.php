@@ -12,18 +12,18 @@ class AuthController extends Controller
 {
     private AuthService $authService;
 
-    public function __construct(AuthService $_authService)
+    public function __construct(AuthService $authService)
     {
-        $this->authService = $_authService;
+        $this->authService = $authService;
     }
 
     public function register(RegisterRequest $request)
     {
         $data = $request -> validated();
         
-        $result = $this->_authService->register($data);
+        $result = $this->authService->register($data);
 
-        return response()->json($result);
+        return response()->json($result, 201);
     }
 
     public function login(LoginRequest $request)

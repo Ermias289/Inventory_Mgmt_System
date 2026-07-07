@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Api\v1\Controllers\AuthController;
+use App\Http\Controllers\Api\v1\AuthController;
 
 Route::get('/test', function(){
     return response()->json(['message' => 'API is working']);
