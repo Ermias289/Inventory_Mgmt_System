@@ -9,9 +9,16 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
-    'api' => [
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
+        ],
     ],
 
     'providers' => [

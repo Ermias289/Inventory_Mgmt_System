@@ -54,12 +54,25 @@ class AuthService
 
     public function logout()
     {
+        auth()->logout();
 
+        return [
+            'success' => true,
+            'message' => 'Logout Successful.',
+        ];
     }
 
     public function refresh()
     {
+        $token = auth() -> refresh();
 
+        return [
+            'success' => true,
+            'message' => 'Token refreshed successfully.',
+            'data' => [
+                'token' => $token,
+            ],
+        ];
     }
 
     public function me()
@@ -72,7 +85,7 @@ class AuthService
 
         return [
             'success' => true,
-            'message' => 'User retrieved successfully.',
+            'message' => 'Authenticated User.',
             'data' => [
                 'user' => new UserResource($user),
             ],

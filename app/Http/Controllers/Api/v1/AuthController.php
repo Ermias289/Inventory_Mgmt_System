@@ -44,18 +44,22 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $result = $this->authService->logout();
 
+        return response()->json($result);
     }
 
     public function refresh()
     {
+        $result = $this->authService->refresh();
 
+        return response()->json($result);
     }
 
     public function me()
     {
         $result = $this->authService->me();
-        
+
         return response()->json($result);
     }
 
