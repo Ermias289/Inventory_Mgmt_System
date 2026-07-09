@@ -50,24 +50,24 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach($permissions as $permission) {
-            Permission::create([
+            Permission::firstOrCreate([
                 'name' => $permission, 
                 'guard_name' => 'api',
                 ]);
         }
 
 
-        $admin = Role::create([
+        $admin = Role::firstOrCreate([
             'name' => 'Admin',
             'guard_name' => 'api',
         ]);
 
-        $manager = Role::create([
+        $manager = Role::firstOrCreate([
             'name' => 'Manager',
             'guard_name' => 'api',
         ]);
 
-        $employee = Role::create([
+        $employee = Role::firstOrCreate([
             'name' => 'Employee',
             'guard_name' => 'api',
         ]);
