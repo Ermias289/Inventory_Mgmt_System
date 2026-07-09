@@ -14,6 +14,7 @@ class CategoryService
     public function getAll(?string $search = null, int $perPage = 10)
     {
         return Category::query() 
+            ->withCount('products')
             ->when($search, function ($query) use ($search)
             {
                 $query->where('name', 'like', "%{$search}%")

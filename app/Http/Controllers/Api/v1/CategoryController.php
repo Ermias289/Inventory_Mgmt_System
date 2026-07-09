@@ -38,11 +38,11 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->create($request->validated());
         
-        return response()->json([
-            'success' => true,
-            'message' => 'Category created successfully.',
-            'data' => new CategoryResource($category),
-        ], 201);
+        return $this->successResponse(
+            new CategoryResource($category),
+            'Category created successfully.',
+            201
+        );
     }
 
     /**
@@ -63,17 +63,24 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->updateCategory($category, $request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Category updated successfully.',
-            'data' => new CategoryResource($category),
-        ]);
+        return $this->successResponse(
+            new CategoryResource($category),
+            'Category updated successfully.'
+        );
     }
+
     /**
      * Remove the specified resource from storage.
      */
+    
     public function destroy(Category $category)
     {
         $this->categoryService->deleteCategory($category);
+
+        return $this->successResponse(
+            new CategoryResource($category),
+            'Category created successfully.',
+            201
+        );
     }
 }
