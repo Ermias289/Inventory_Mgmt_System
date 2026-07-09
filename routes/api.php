@@ -37,6 +37,25 @@ Route::prefix('v1') -> group (function(){
         )
         ->middleware('permission:categories.create');
 
+        Route::get('/categories',
+            [CategoryController::class, 'index']
+        )
+        ->middleware('permission:categories.view');
+
+        Route::get('/categories/{category}',
+            [CategoryController::class, 'show']
+        )
+        ->middleware('permission:categories.view');
+
+        Route::put('/categories/{category}',
+            [CategoryController::class, 'update']
+        )
+        ->middleware('permission:categories.update');
+
+        Route::delete('/categories/{category}',
+            [CategoryController::class, 'destroy']
+        )
+        ->middleware('permission:categories.delete');
 
     });
 });

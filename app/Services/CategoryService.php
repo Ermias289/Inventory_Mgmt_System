@@ -11,13 +11,25 @@ class CategoryService
         return Category::create($data);
     }
 
-    public function updateCategory(Category $category, array $data): bool
+    public function getAll(?string $search = null, int $perPage = 10)
     {
-        return $category->update($data);
+        return Category::query() 
+            ->when($search, function ($query) use ($search)
+            {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+            })->paginate($perPage);
+    }
+   
+    public function updateCategory(Category $category, array $data): Category
+    {
+        $category->update($data);
+
+        return $category->fresh();
     }
 
-    public function deleteCategory(Category $category): bool
+    public function deleteCategory(Category $category): void
     {
-        return $category->delete();
+        $category->delete();
     }
 }
