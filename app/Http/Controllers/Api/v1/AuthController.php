@@ -28,7 +28,18 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
+        $credentials = $request -> validated();
 
+        $result = $this->authService->login($credentials);
+
+        if (!$result) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials.'
+                ], 401);
+        }
+
+        return response()->json($result);
     }
 
     public function logout()
@@ -43,7 +54,9 @@ class AuthController extends Controller
 
     public function me()
     {
-
+        $result = $this->authService->me();
+        
+        return response()->json($result);
     }
 
 

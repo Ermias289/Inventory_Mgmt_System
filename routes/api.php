@@ -16,5 +16,12 @@ Route::prefix('v1') -> group (function(){
     Route::post('/login', 
         [AuthController::class, 'login']
     );
+});
+
+Route::middleware('auth:api') -> prefix('v1') -> group (function(){
+    Route::get('/me',
+        [AuthController::class, 'me'])
+    );
+
 
 });
