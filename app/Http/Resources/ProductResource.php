@@ -29,9 +29,9 @@ class ProductResource extends JsonResource
 
             'category' => [
 
-                'id' => $this->category->id,
+                'id' => $this->category?->id,
 
-                'name' => $this->category->name,
+                'name' => $this->category?->name,
             ],
 
             'stock' => [
@@ -39,7 +39,7 @@ class ProductResource extends JsonResource
                 'minimum_quantity' => $this->stock?->minimum_quantity,
             ],
 
-            'created_at' => $this->created_at->toISOString(),
+            'created_at' => $this->created_at?->toISOString(),
         ];
     }
 }

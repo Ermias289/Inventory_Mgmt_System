@@ -9,24 +9,39 @@ use App\Repositories\Contracts\ProductRepositoryInterface;
 class ProductRepository implements ProductRepositoryInterface
 {
     public function paginate(
-        ?string $search = null,
-        ?int $perPage = 10,
-        ?int $categoryId = null
-    ): LengthAwarePaginator 
+    ?string $search = null,
+    ?int $categoryId = null,
+    int $perPage = 10
+    ): LengthAwarePaginator
     {
         return Product::query()
-            ->with('category', 'stock')
+            ->with([
+                'category',
+                'stock'
+            ])
+
             ->when($search, function($query) use ($search){
-                $query-> where(function($q) use ($search){
-                    $q->where('name', 'like', "%{$search}%")
-                      ->orWhere('sku', 'like', "%{$search}%");
+
+                $query->where(function($q) use ($search){
+
+                    $q->where('name','like',"%{$search}%")
+                    ->orWhere('sku','like',"%{$search}%");
+
                 });
+
             })
-            -> when($categoryId, function($query) use ($categoryId){
-                $query -> where('category_id', $categoryId);
+
+            ->when($categoryId, function($query) use ($categoryId){
+
+                $query->where(
+                    'category_id',
+                    $categoryId
+                );
+
             })
-            -> latest()
-            -> paginate($perPage);
+
+            ->latest()
+            ->paginate($perPage);
     }
 
     public function findById(int $id): ?Product

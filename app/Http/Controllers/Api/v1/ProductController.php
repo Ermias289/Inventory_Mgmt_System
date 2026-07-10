@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Services\ProductService;
 use App\Http\Resources\ProductResource;
-
+use App\Models\Product;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {

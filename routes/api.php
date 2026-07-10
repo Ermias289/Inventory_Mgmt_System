@@ -67,7 +67,7 @@ Route::prefix('v1') -> group (function(){
         )->middleware('permission:products.view');
 
         Route::get('/products/{product}',
-            [ProductController::class, 'index']
+            [ProductController::class, 'show']
         )->middleware('permission:products.view');
 
         Route::put('/products/{product}',

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use App\Models\Stock;
 use App\Models\Product;
 use App\Repositories\Contracts\StockRepositoryInterface;
 use App\Services\SkuService;
@@ -44,13 +43,13 @@ class ProductService{
     }
 
     public function paginate(
-        ?string $search = null,
-        ?int $categoryId = null,
-        int $perPage = 10
+    ?string $search = null,
+    ?int $categoryId = null,
+    int $perPage = 10
     )
     {
         return $this->productRepository->paginate(
-            $search, 
+            $search,
             $categoryId,
             $perPage
         );

@@ -10,9 +10,9 @@ interface ProductRepositoryInterface
 {
     public function paginate(
         ?string $search = null,
-        ?int $perPage = 10,
-        ?int $categoryId = null
-    ): LengthAwarePaginator;    
+        ?int $categoryId = null,
+        int $perPage = 10
+    ): LengthAwarePaginator;
 
     public function findById(int $id): ?Product;
     

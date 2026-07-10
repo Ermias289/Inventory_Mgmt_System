@@ -6,12 +6,20 @@ use Illuminate\Http\JsonResponse;
 
 abstract class Controller
 {
-   protected function successResponse(
+
+    protected function successResponse(
         mixed $data = null,
         string $message = 'Success',
         int $status = 200
     ): JsonResponse
     {
+        if ($data instanceof JsonResource || $data instanceof AnonymousResourceCollection) {
+            return $data->additional([
+                'success' => true,
+                'message' => $message
+            ]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => $message,
