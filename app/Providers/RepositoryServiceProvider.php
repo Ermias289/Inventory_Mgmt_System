@@ -22,7 +22,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(
             StockRepositoryInterface::class,
-            StockRepository::Class
+            StockRepository::class
         );
     }
 

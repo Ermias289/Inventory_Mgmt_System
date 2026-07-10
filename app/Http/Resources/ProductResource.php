@@ -39,6 +39,9 @@ class ProductResource extends JsonResource
                 'minimum_quantity' => $this->stock?->minimum_quantity,
             ],
 
+            'image' =>[
+                'url'
+            ]
             'created_at' => $this->created_at?->toISOString(),
         ];
     }

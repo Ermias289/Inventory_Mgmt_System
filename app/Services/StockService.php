@@ -7,7 +7,9 @@ use App\Models\Stock;
 
 class StockService
 {
-    public function __construct{
+    public function __construct(
         private readonly StockRepositoryInterface $stockRepository
+    ){
+
     }
 }

@@ -58,6 +58,10 @@ Route::prefix('v1') -> group (function(){
         )
         ->middleware('permission:categories.delete');
 
+        Route::post('/products/{product}/images', 
+            [ProductController::class, 'uploadImages']
+        );
+
         Route::post('/products',
             [ProductController::class, 'store']
         )-> middleware('permission:products.create');

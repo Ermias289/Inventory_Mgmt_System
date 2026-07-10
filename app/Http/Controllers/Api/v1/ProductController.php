@@ -9,6 +9,7 @@ use App\Services\ProductService;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\UploadProductImageRequest;
 
 class ProductController extends Controller
 {
@@ -90,6 +91,21 @@ class ProductController extends Controller
             null,
             'product deleted successfully.'
         );
+    }
+
+    public function uploadImages(
+        UploadProductImageRequest $request,
+        Product $product
+    ){
+        foreach($request->file('images') as $image)
+            {
+             $product -> addMedia($image)->toMediaCollection('images');   
+            }
+        
+            return $this->successResponse(
+                new ProductResource($product ->load('media')),
+                'Images Uploaded Successfully.'
+            );
     }
    
 }
