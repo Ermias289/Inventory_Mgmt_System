@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Stock;
 
-interface StockRepositeryInterface
+interface StockRepositoryInterface
 {
     public function create(array $data): Stock;
 

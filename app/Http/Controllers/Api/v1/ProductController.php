@@ -17,11 +17,6 @@ class ProductController extends Controller
 
     }
 
-    public function index()
-    {
-
-    }
-
     public function store(StoreProductRequest $request)
     {
         $product = $this->productService->create(
@@ -63,11 +58,12 @@ class ProductController extends Controller
         $product -> load([
             'category',
             'stock'
-        ])
+        ]);
+
         return $this->successResponse(
             new ProductResource($product),
             'Product retrieved successfully.'
-        )
+        );
     }
 
    
@@ -81,7 +77,7 @@ class ProductController extends Controller
         return $this->successResponse(
             new ProductResource($product),
             'Product updated successfully.'
-        )
+        );
     }
 
     
@@ -92,7 +88,7 @@ class ProductController extends Controller
         return $this->successResponse(
             null,
             'product deleted successfully.'
-        )
+        );
     }
    
 }

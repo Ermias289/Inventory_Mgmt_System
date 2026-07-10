@@ -36,7 +36,7 @@ class StoreProductRequest extends FormRequest
             ],
 
             'sku' => [
-                'required',
+                'nullable',
                 'string',
                 'max:100',
                 'unique:products,sku'

@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Stock;
 use App\Models\Product;
 use App\Repositories\Contracts\StockRepositoryInterface;
-
+use App\Services\SkuService;
 
 class ProductService{
 
     public function __construct(
         private readonly ProductRepositoryInterface $productRepository, 
-        private readonly StockRepositoryInterface $stockRepository
+        private readonly StockRepositoryInterface $stockRepository,
+        private readonly SkuService $skuService
         ){
 
     }
@@ -22,9 +23,14 @@ class ProductService{
     {
         return DB::transaction(function () use ($data)
         {
+            if(empty($data['sku'])){
+                $data['sku'] = $this-> skuService->generate($data['name']);
+            }
+
             $product = $this->productRepository->create($data);
 
-            $this->$stockRepository->create([
+
+            $this->stockRepository->create([
                 'product_id' => $product->id,
                 'quantity' => 0,
                 'minimum_quantity' => 5
@@ -50,7 +56,7 @@ class ProductService{
         );
     }
 
-    product function update(
+    public function update(
         Product $product, 
         array $data    
     ):Product
