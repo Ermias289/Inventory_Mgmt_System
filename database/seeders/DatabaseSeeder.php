@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => '123456',
         ]);
 
         $this->call([

@@ -2,47 +2,83 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
+use App\Services\ProductService;
+use App\Http\Resources\ProductResource;
+
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        private readonly ProductService $productService
+    ){
+
+    }
+
     public function index()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = $this->productService->create(
+            $request->validated()
+        );
+
+        return $this->successResponse(
+            new ProductResource($product),
+            'Product created Successfully',
+            201
+        );
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function index(Request $request)
     {
-        //
+
+        $products = $this->productService->paginate(
+
+            $request->search,
+
+            $request->integer('category_id'),
+
+            $request->integer('per_page',10)
+
+        );
+
+
+        return $this->successResponse(
+            ProductResource::collection($products),
+            'Products retrieved successfully.'
+        );
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
+    public function show(Product $product)
+    {
+        $product -> load([
+            'category',
+            'stock'
+        ])
+        return $this->successResponse(
+            new ProductResource($product),
+            'Product retrieved successfully.'
+        )
+    }
+
+   
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
-        //
+
     }
 }

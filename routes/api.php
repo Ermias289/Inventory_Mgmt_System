@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\ProductController;
 
 Route::get('/test', function(){
     return response()->json(['message' => 'API is working']);
@@ -57,6 +58,13 @@ Route::prefix('v1') -> group (function(){
         )
         ->middleware('permission:categories.delete');
 
+        Route::post('/products',
+            [ProductController::class, 'store']
+        )-> middleware('permission:products.create');
+
+        Route::get('/products',
+            [ProductController::class, 'show']
+        )->middleware('permission:product.view');
     });
 });
 
