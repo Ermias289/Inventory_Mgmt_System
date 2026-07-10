@@ -49,4 +49,32 @@ class ProductService{
             $perPage
         );
     }
+
+    product function update(
+        Product $product, 
+        array $data    
+    ):Product
+    {
+        return DB::transaction (function() use($product, $data){
+            $product = $this->productRepository
+                ->update($product, $data);
+
+            return $product->load([
+                'category',
+                'stock'
+            ]);
+        });
+    }
+
+    public function delete(Product $product): void
+    {
+
+        DB::transaction(function() use($product){
+
+            $this->productRepository
+                ->delete($product);
+
+        });
+
+    }
 }

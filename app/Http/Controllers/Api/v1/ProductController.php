@@ -71,14 +71,28 @@ class ProductController extends Controller
     }
 
    
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
+        $product = $this->productService->update(
+            $product, 
+            $request->validated()
+        );
 
+        return $this->successResponse(
+            new ProductResource($product),
+            'Product updated successfully.'
+        )
     }
 
     
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
+        $this->productService->delete($product);
 
+        return $this->successResponse(
+            null,
+            'product deleted successfully.'
+        )
     }
+   
 }
