@@ -53,4 +53,11 @@ class Product extends Model implements HasMedia
             ->logAll()
             ->logOnlyDirty();
     }
+
+    public function stockMovement()
+    {
+        return $this->hasMany(
+            StockMovement::class
+        );
+    }
 }

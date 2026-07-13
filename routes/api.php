@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\StockController;
 
 Route::get('/test', function(){
     return response()->json(['message' => 'API is working']);
@@ -84,6 +85,16 @@ Route::prefix('v1') -> group (function(){
 
         Route::delete('/products/{product}/images/{media}',
             [ProductController::class, 'deleteImages']
+        );
+
+        Route::post(
+            '/products/{product}/stock/in',
+            [StockController::class, 'increase']
+        );
+
+        Route::post(
+            '/products/{product}/stock/out',
+            [StockController::class, 'decrease']
         );
     });
 });
