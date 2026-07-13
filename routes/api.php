@@ -82,6 +82,9 @@ Route::prefix('v1') -> group (function(){
             [ProductController::class, 'destroy']
         )->middleware('permission:products.delete');
 
+        Route::delete('/products/{product}/images/{media}',
+            [ProductController::class, 'deleteImages']
+        );
     });
 });
 

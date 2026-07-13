@@ -39,9 +39,16 @@ class ProductResource extends JsonResource
                 'minimum_quantity' => $this->stock?->minimum_quantity,
             ],
 
-            'image' =>[
-                'url'
-            ]
+            'images' => $this -> getMedia('images')
+                -> map(function($media){
+                    return [
+                        'id' => $media->id,
+                        'original_url' => $media->getUrl(),
+                        'thumbnail_url'=>$media->getUrl('thumb'),
+                        'name'=>$media->file_name
+                    ];
+                }),
+
             'created_at' => $this->created_at?->toISOString(),
         ];
     }

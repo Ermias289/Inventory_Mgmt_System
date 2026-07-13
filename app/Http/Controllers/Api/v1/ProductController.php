@@ -10,6 +10,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\UploadProductImageRequest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductController extends Controller
 {
@@ -46,6 +47,7 @@ class ProductController extends Controller
 
         );
 
+        
 
         return $this->successResponse(
             ProductResource::collection($products),
@@ -108,4 +110,23 @@ class ProductController extends Controller
             );
     }
    
+    public function deleteImages(
+        Product $product,
+        Media $media
+    )
+    {
+        if($media->model_id !== $product->id){
+            return $this->errorResponse(
+                'Image does not belong to this product.',
+                403
+            );
+        }
+
+        $media->delete();
+
+        return $this->successResponse(
+            null,
+            'Image deleted successfully.'
+        );
+    }
 }

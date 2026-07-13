@@ -23,17 +23,11 @@ class UploadProductImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'images'=>[
+            'images' => [
                 'required',
-                'array'
+                'array',
+                'max:5',
             ],
-
-            'images.*' => [
-                'image',
-                'mimes:jpeg, png, jpg, webp',
-                'max:2048'
-            ]
-
         ];
     }
 }
