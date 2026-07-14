@@ -96,6 +96,10 @@ Route::prefix('v1') -> group (function(){
             '/products/{product}/stock/out',
             [StockController::class, 'decrease']
         );
+
+        Route::get('/products/{product}/stock/history',
+            [StockController::class, 'history']
+        );
     });
 });
 

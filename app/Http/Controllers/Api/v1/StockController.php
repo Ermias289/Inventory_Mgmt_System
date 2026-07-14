@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\StockService;
 use App\Http\Requests\StockMovementRequest;
-
+use App\Models\StockMovement;
+use App\Http\Resources\StockMovementResource;
 
 class StockController extends Controller
 {
@@ -36,9 +37,11 @@ class StockController extends Controller
 
 
         return $this->successResponse(
-            $movement,
+            new StockMovementResource($movement),
             'Stock increased successfully.'
         );
+
+        event(new StockChanged($product->fresh()));
 
     }
 
@@ -59,11 +62,30 @@ class StockController extends Controller
 
 
         return $this->successResponse(
-            $movement,
+            new StockMovementResource($movement),
             'Stock decreased successfully.'
         );
 
     }
 
+    public function history(Product $product)
+    {
+        $movements = StockMovement::query()
+            ->where(    
+                'product_id',
+                $product->id
+            )
+            ->with([
+                'user'
+            ])
+            ->latest()
+            ->paginate(10);
+
+
+        return $this->successResponse(
+           StockMovementResource::collection($movements),
+            'Stock history retrieved successfully.'
+        );
+    }
 
 }
