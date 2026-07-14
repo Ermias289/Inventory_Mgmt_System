@@ -45,7 +45,18 @@ class StockService
 
             ]);
             
+            activity()
+                ->performedOn($product)
+                ->causedBy(auth()->user->id)
+                ->withProperties([
+                    'type'=>'IN',
+                    'quantity'=>$quantity,
+                    'reason'=>$reason
+                ])
+                ->log('Stock increased');
+
             event(new StockChanged($product->fresh()));
+
             return $movement;
 
         });
@@ -93,6 +104,16 @@ class StockService
 
             ]);
 
+            activity()
+                ->performedOn($product)
+                ->causedBy(auth()->user->id)
+                ->withProperties([
+                    'type'=>'OUT',
+                    'quantity'=>$quantity,
+                    'reason'=>$reason
+                ])
+                ->log('Stock decreased');
+                
             event(new StockChanged($product->fresh()));
             return $movement;
         });

@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Product;
 
-class LowStockNotification extends Notification
+class LowStockNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     
