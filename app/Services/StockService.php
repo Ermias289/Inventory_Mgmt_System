@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\StockMovement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Events\StockChanged;
+use Illuminate\Support\Facades\log;
 
 class StockService
 {
@@ -28,7 +30,7 @@ class StockService
                     $quantity
                 );
 
-            return StockMovement::create([
+            $movement = StockMovement::create([
 
                 'product_id'=>$product->id,
 
@@ -39,9 +41,15 @@ class StockService
                 'quantity'=>$quantity,
 
                 'reason'=>$reason
+
+
             ]);
+            
+            event(new StockChanged($product->fresh()));
+            return $movement;
+
         });
-    }
+    }       
 
     public function decrease(
         Product $product,
@@ -71,7 +79,7 @@ class StockService
                 );
 
 
-            return StockMovement::create([
+            $movement = StockMovement::create([
 
                 'product_id'=>$product->id,
 
@@ -85,6 +93,8 @@ class StockService
 
             ]);
 
+            event(new StockChanged($product->fresh()));
+            return $movement;
         });
 
     }
@@ -108,7 +118,7 @@ class StockService
                 ]);
 
 
-            return StockMovement::create([
+            $movement = StockMovement::create([
 
                 'product_id'=>$product->id,
 
@@ -121,7 +131,8 @@ class StockService
                 'reason'=>$reason
 
             ]);
-
+            event(new StockChanged($product->fresh()));
+            return $movement;
         });
 
     }

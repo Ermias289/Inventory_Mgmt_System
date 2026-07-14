@@ -38,6 +38,8 @@ class RolePermissionSeeder extends Seeder
             'stock.create',
             'stock.update',
             'stock.remove',
+            'stock.manage',
+            'inventory.stock.alerts', 
 
             //Reports
             'reports.view',

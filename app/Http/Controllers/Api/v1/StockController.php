@@ -40,9 +40,6 @@ class StockController extends Controller
             new StockMovementResource($movement),
             'Stock increased successfully.'
         );
-
-        event(new StockChanged($product->fresh()));
-
     }
 
 
